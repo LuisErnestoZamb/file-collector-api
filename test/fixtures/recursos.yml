@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cnpnumero: 1
+  archivo: 
+  procesado: false
+
+two:
+  cnpnumero: 1
+  archivo: 
+  procesado: false
