@@ -11,8 +11,11 @@ class RecursosController < ApplicationController
   # POST /subidaExterna.php?carnet=
   # POST /subidaExterna.php?numeroCnp=
   def create
-    if (params[:carnet] || (params[:nac] && params[:cedula]))
-      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/traer_afiliado_por_id/?afiliado_id="+params[:id].to_s+"&pre_token="+"")
+    if (params[:carnet] || 
+      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?carnet="+params[:carnet].to_s
+      render json: response.body
+    elsif (params[:nac] && params[:cedula]))
+      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?identidad="+params[:nac] + params[:cedula])
       render json: response.body
     elsif params[:numeroCnp]
       @recurso = Recurso.new
