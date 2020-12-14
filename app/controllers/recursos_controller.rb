@@ -1,32 +1,31 @@
 class RecursosController < ApplicationController
+  include ActionController::MimeResponds
   before_action :set_recurso, only: [:show, :update]
 
-  # GET /recursos
+  # GET /renderizar.php?id=
   def index
-    @recursos = Recurso.all
-
-    render json: @recursos
+    response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/traer_afiliado_por_id/?afiliado_id="+params[:id].to_s+"&pre_token="+"")
+    render html: response.body.html_safe
   end
 
-  # POST /recursos
+  # POST /subidaExterna.php?carnet=
+  # POST /subidaExterna.php?numeroCnp=
   def create
-    @recurso = Recurso.new(recurso_params)
-
-    if @recurso.save
-      render json: @recurso, status: :created, location: @recurso
-    else
-      render json: @recurso.errors, status: :unprocessable_entity
+    if (params[:carnet] || (params[:nac] && params[:cedula]))
+      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/traer_afiliado_por_id/?afiliado_id="+params[:id].to_s+"&pre_token="+"")
+      render json: response.body
+    elsif params[:numeroCnp]
+      @recurso = Recurso.new
+      @recurso.cnpnumero = params[:numeroCnp]
+      @recurso.procesado = false
+      params[:file].content_type = "image/jpeg"
+      @recurso.archivo = params[:file]
+      if @recurso.save
+        render json: @recurso, status: :created, location: @recurso
+      else
+        render json: @recurso.errors, status: :unprocessable_entity
+      end
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_recurso
-      @recurso = Recurso.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def recurso_params
-      params.require(:recurso).permit(:cnpnumero, :archivo, :procesado)
-    end
 end
