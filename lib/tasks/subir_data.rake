@@ -13,4 +13,5 @@ namespace :subir_data do
       recurso.procesado = true
       recurso.save
     end
+  end
 end
