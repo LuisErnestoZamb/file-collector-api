@@ -12,7 +12,7 @@ class RecursosController < ApplicationController
   # POST /subidaExterna.php?numeroCnp=
   def create
     if params[:carnet]
-      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?carnet="+params[:carnet].to_s
+      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?carnet="+params[:carnet].to_s)
       render json: response.body
     elsif (params[:nac] && params[:cedula])
       response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?identidad="+params[:nac] + params[:cedula])
