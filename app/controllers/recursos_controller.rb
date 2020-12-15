@@ -23,8 +23,10 @@ class RecursosController < ApplicationController
       @recurso.procesado = false
       @recurso.archivo = params[:file]
       if @recurso.save
+        puts @recurso
         render json: @recurso, status: :created, location: @recurso
       else
+        puts @recurso.errors.to_json
         render json: @recurso.errors, status: :unprocessable_entity
       end
     end
