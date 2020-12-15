@@ -21,7 +21,6 @@ class RecursosController < ApplicationController
       @recurso = Recurso.new
       @recurso.cnpnumero = params[:numeroCnp]
       @recurso.procesado = false
-      params[:file].content_type = "image/jpeg"
       @recurso.archivo = params[:file]
       if @recurso.save
         render json: @recurso, status: :created, location: @recurso
