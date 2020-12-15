@@ -5,6 +5,7 @@ namespace :subir_data do
     q.each do |recurso|
       HTTParty.post(
         ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/ingresar",
+        multipart: true,
         :headers => {
           'Content-Type' => 'binary/octet-stream',
           'Accept-Encoding' => 'gzip,deflate,sdch',
