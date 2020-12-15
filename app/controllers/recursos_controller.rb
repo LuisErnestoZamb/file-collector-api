@@ -21,7 +21,7 @@ class RecursosController < ApplicationController
       contenido = {}
       contenido[:data]      = params[:file].read
       contenido[:filename]  = params[:file].original_filename
-      contenido[:mime_type] = params[:file].content_type
+      contenido[:content_type] = params[:file].content_type
 
       @recurso = Recurso.new(cnpnumero: params[:numeroCnp], procesado: false, archivo: contenido)
       if @recurso.save
