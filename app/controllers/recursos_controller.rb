@@ -17,7 +17,7 @@ class RecursosController < ApplicationController
       response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?identidad="+params[:nac] + params[:cedula])
       render json: response.body
     elsif params[:numeroCnp]
-      @recurso = Recurso.new(cnpnumero: params[:numeroCnp], procesado: false, archivo: params[:file].tempfile)
+      @recurso = Recurso.new(cnpnumero: params[:numeroCnp], procesado: false, archivo: params[:file].read)
       if @recurso.save
         render json: @recurso, status: :created
       else
