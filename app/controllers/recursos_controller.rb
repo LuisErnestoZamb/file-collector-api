@@ -1,6 +1,5 @@
 class RecursosController < ApplicationController
   include ActionController::MimeResponds
-  before_action :set_recurso, only: [:show, :update]
 
   # GET /renderizar.php?id=
   def index
@@ -10,7 +9,7 @@ class RecursosController < ApplicationController
 
   # POST /subidaExterna.php?carnet=
   # POST /subidaExterna.php?numeroCnp=
-  def create
+  def subida
     if params[:carnet]
       response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?carnet="+params[:carnet].to_s)
       render json: response.body
@@ -18,15 +17,13 @@ class RecursosController < ApplicationController
       response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?identidad="+params[:nac] + params[:cedula])
       render json: response.body
     elsif params[:numeroCnp]
-      @recurso = Recurso.new
-      @recurso.cnpnumero = params[:numeroCnp]
-      @recurso.procesado = false
-      @recurso.archivo = params[:file]
+      @recurso = Recurso.create(cnpnumero: params[:numeroCnp], procesado: false, archivo: params[:file])
       if @recurso.save
         puts @recurso
         render json: @recurso, status: :created, location: @recurso
       else
         puts @recurso.errors.to_json
+        puts params
         render json: @recurso.errors, status: :unprocessable_entity
       end
     end
