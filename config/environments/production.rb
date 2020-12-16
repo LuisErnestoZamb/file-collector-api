@@ -1,13 +1,13 @@
 Rails.application.configure do
   config.paperclip_defaults = {
-    :storage => :s3,
-    :preserve_files => true,
-    :s3_credentials => {
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-      :s3_region => ENV['AWS_DEFAULT_REGION']
+    storage: :s3,
+    s3_credentials: {
+      bucket: ENV['DATA_ON_S3_AND_FILES'],
+      access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+      s3_region: ENV['AWS_DEFAULT_REGION']
     },
-    :bucket => ENV['DATA_ON_S3_AND_FILES']
+    bucket: ENV['DATA_ON_S3_AND_FILES'],
   }
   # Settings specified here will take precedence over those in config/application.rb.
 
