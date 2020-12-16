@@ -20,6 +20,9 @@ gem 'httparty', '~> 0.18.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem "paperclip", "~> 6.0.0"
 
+group :production do
+  gem 'aws-sdk-s3'
+end
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
