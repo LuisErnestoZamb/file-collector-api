@@ -3,6 +3,12 @@ namespace :subir_data do
   task procesar: :environment do
     q = Recurso.where(procesado: false)
     q.each do |recurso|
+      external_file = recurso.carpeta.expiring_url(60)
+      content = open(external_file, "r") { |f| f.read }
+      receivedPath = "tmp/"
+      large_temp_file = receivedPath + "plain_" + recurso.carpeta_file_name
+      Dir.mkdir(receivedPath) unless File.exists?(receivedPath)
+      File.write large_temp_file, content
       HTTParty.post(
         ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/ingresar",
         multipart: true,
@@ -13,7 +19,7 @@ namespace :subir_data do
         },
         body: {
           numeroCnp: recurso.cnpnumero,
-          file: recurso.archivo
+          file: File.open(large_temp_file)
         }
       )
       recurso.procesado = true
