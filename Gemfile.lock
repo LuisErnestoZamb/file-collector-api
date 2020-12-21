@@ -125,6 +125,7 @@ GEM
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
     pg (1.2.3)
+    posix-spawn (0.3.15)
     puma (4.3.7)
       nio4r (~> 2.0)
     rack (2.2.3)
@@ -195,6 +196,7 @@ DEPENDENCIES
   listen (~> 3.2)
   paperclip (~> 6.0.0)
   pg (>= 0.18, < 2.0)
+  posix-spawn
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
   spring
