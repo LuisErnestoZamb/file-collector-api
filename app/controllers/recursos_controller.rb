@@ -14,7 +14,7 @@ class RecursosController < ApplicationController
       response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?carnet="+params[:carnet].to_s)
       render json: response.body
     elsif (params[:nac] && params[:cedula])
-      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?identidad="+params[:nac] + params[:cedula])
+      response = HTTParty.get(ENV['RUTA_EXTERNA_WHO']+"/subidasexternas/buscar_mixto/?nac="+params[:nac] +"&cedula="+ params[:cedula])
       render json: response.body
     elsif params[:numeroCnp]
       @recurso = Recurso.new(cnpnumero: params[:numeroCnp], procesado: false, carpeta: params[:file])
